@@ -5,7 +5,10 @@ A Ruby on Rails plugin extending and adding features to [Facebooker][1], possibl
 [1]: http://github.com/mmangino/facebooker/tree/master
 
 * Adds multi-application support by storing all application configuration in the database.
-* Adds a lot of customizations to make sure iframe based Facebook applications work properly as long as you use Rails helpers.
+* Adds a lot of customizations to make sure iframe based Facebook applications work properly.
+	* Cookies are set properly in WebKit-based browsers which default to deny 3rd party cookies.
+	* All helpers are overloaded to include the _fb\_sig\_*_ params in all links, forms, button\_to and more.
+	* In the actual requested URLs _xfb\_sig\_*_ is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing facebooker to fail for iframe applications in browsers which don't accept third party cookies.
 
 WARNING: Completely untested with canvas applications.
 
