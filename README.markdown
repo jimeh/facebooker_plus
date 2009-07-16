@@ -1,6 +1,6 @@
 # Facebooker Plus
 
-A Ruby on Rails plugin extending and adding some features to [Facebooker][1].
+A Ruby on Rails plugin extending and adding features to [Facebooker][1], possibly beyond the originally intended scope of Facebooker itself.
 
 [1]: http://github.com/mmangino/facebooker/tree/master
 
