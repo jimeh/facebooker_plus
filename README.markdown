@@ -7,18 +7,16 @@ A Ruby on Rails plugin fixing, extending and adding features to [Facebooker][1],
 * Adds multi-application support by storing all application configuration in the database.
 * Adds a lot of customizations to make sure iframe based Facebook applications work properly.
 	* Cookies are set properly in WebKit-based browsers which default to deny 3rd party cookies.
-	* All helpers are overloaded to include the _fb\_sig\_\*_ params in all links, forms, button\_to and more.
-	* In the actual requested URLs _xfb\_sig\_\*_ is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing facebooker to fail for iframe applications in browsers which don't accept third party cookies.
+	* All helpers are overloaded to include the *fb_sig_\** params in all links, forms, button\_to and more.
+	* In the actual requested URLs *xfb_sig_\** is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing facebooker to fail for iframe applications in browsers which don't accept third party cookies.
 
 __WARNING: Completely untested with canvas applications.__
 
 ## Install Plugin
 
-Detailed instructions for n00bs are coming soon.
+    script/plugin install git://github.com/jimeh/facebooker_plus.git
 
 ## Setup the Database
-
-Run the following in your Rails project directory:
 
     script/generate model App
 
@@ -44,7 +42,7 @@ And then migrate:
 
     rake db:migrate
 
-Edit _app/models/app.rb_, and add _extend\_application\_with\_facebooker\_plus_ like so:
+Edit *app/models/app.rb*, and add *extend_application_with_facebooker_plus* like so:
  
     class App < ActiveRecord::Base
       extend_application_with_facebooker_plus
@@ -52,7 +50,7 @@ Edit _app/models/app.rb_, and add _extend\_application\_with\_facebooker\_plus_ 
 
 ## Initiate Facebooker Plus in your app
 
-Simply place the following code in your ApplicationController:
+Simply place the following line of code in your ApplicationController, before Facebooker's *ensure_application_is_installed_by_facebook_user*:
 
     init_facebooker_plus
 
