@@ -26,8 +26,7 @@ module FacebookerPlus
       
       def set_facebooker_plus_options(options = {})
         @facebooker_plus_options = {
-          :app_class => "App",
-          :user_class => "User"
+          :app_class => "App"
         }
         options.each do |key, value|
           @facebooker_plus_options[key] = value
