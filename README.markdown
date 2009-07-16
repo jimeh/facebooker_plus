@@ -44,7 +44,7 @@ And then migrate:
 
     rake db:migrate
 
-Edit app/models/app.rb, and add _extend\_application\_with\_facebooker\_plus_ like so:
+Edit _app/models/app.rb_, and add _extend\_application\_with\_facebooker\_plus_ like so:
  
     class App < ActiveRecord::Base
       extend_application_with_facebooker_plus
