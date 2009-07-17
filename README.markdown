@@ -2,15 +2,15 @@
 
 A Ruby on Rails plugin fixing, extending and adding features to [Facebooker][1], possibly beyond the originally intended scope of Facebooker itself.
 
+Originally the main focus was on iframe-based applications, meaning that canvas applications are pretty much completely untested. But we will be doing some testing soon to make sure everything works with canvas applications as well.
+
 [1]: http://github.com/mmangino/facebooker/tree/master
 
 * Adds multi-application support by storing all application configuration in the database.
 * Adds a lot of customizations to make sure iframe based Facebook applications work properly.
 	* Cookies are set properly in WebKit-based browsers which default to deny 3rd party cookies.
-	* All helpers are overloaded to include the *fb_sig_\** params in all links, forms, button\_to and more.
-	* In the actual requested URLs *xfb_sig_\** is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing facebooker to fail for iframe applications in browsers which don't accept third party cookies.
-
-__WARNING: Completely untested with canvas applications.__
+	* All helpers are overloaded to include the `fb_sig_*` params in all links, forms, button_to and more.
+	* In the actual requested URLs `xfb_sig_*` is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing Facebooker to fail for iframe applications in browsers which don't accept third party cookies.
 
 ## Install Plugin
 
@@ -42,21 +42,30 @@ And then migrate:
 
     rake db:migrate
 
-Edit *app/models/app.rb*, and add *extend_application_with_facebooker_plus* like so:
+Edit `app/models/app.rb`, and add `extend_application_with_facebooker_plus` like so:
  
     class App < ActiveRecord::Base
       extend_application_with_facebooker_plus
     end
 
-## Initiate Facebooker Plus in your app
+## Initiate Facebooker Plus in Your App
 
-Simply place the following line of code in your ApplicationController, before Facebooker's *ensure_application_is_installed_by_facebook_user*:
+Simply place the following line of code in your ApplicationController, before Facebooker's `ensure_application_is_installed_by_facebook_user`:
 
     init_facebooker_plus
 
 ## Configuring Facebooker
 
-Use your favorite database viewer/editor and add a new row to the _apps_ table with all the correct information.
+Use your favorite database viewer/editor and add a new row to the `apps` table with all the correct information. If for any reason the current app's configuration is not stored in the database, the table doesn't exist, or any other problem, Facebooker will revert to using `config/facebooker.yml` for it's configuration.
+
+## Skip Facebooker Plus and/or Facebooker for Certain Controllers
+
+You can skip having Facebooker Plus and/or Facebooker run on certain controllers with two simple methods. This is useful if you wanna create a Welcome controller for example which displays some introduction pages to users before requesting them to add the application.
+
+Add the following in the beginning of your controller:
+
+    skip_facebooker
+    skip_facebooker_plus
 
 ## Notes
 
