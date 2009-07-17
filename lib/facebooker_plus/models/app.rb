@@ -20,7 +20,7 @@ module FacebookerPlus
 
     module SingletonMethods
       
-      def retrieve_current_app(app_id)
+      def retrieve_app(app_id)
         find_by_fb_app_id!(app_id)
       rescue
         find(app_id) rescue nil

@@ -54,7 +54,7 @@ module FacebookerPlus
       def apply_facebooker_options(options = {})
         if @facebooker_plus_options.has_key?(:app_class)
           app_model = @facebooker_plus_options[:app_class].constantize
-          @app = app_model.retrieve_current_app(params[:fb_sig_app_id] || session[:app_id])
+          @app = app_model.retrieve_app(params[:fb_sig_app_id] || session[:app_id])
           if @app
             Facebooker.apply_configuration(@app.attributes)
           end
@@ -88,7 +88,7 @@ module FacebookerPlus
       # ---------------------------------------------------------------
       
       def rescue_and_kill_facebook_session
-        redirect_to "/fb_session/reset?request_path=" + URI::escape(non_fb_params, "/=!?&")
+        redirect_to "/fb_session/reset"
       end
       
       
