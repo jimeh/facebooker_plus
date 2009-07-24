@@ -48,6 +48,14 @@ Edit `app/models/app.rb`, and add `extend_application_with_facebooker_plus` like
       extend_application_with_facebooker_plus
     end
 
+## Use Memcache for Session storage
+
+Due to third party cookies being blocked on some browsers, the default cookie storage for session data does not work when you're developing an iframe application. Instead you need to store the session data on the server. This can be done in a few different way, but the generally recommended method is to use memcached.
+
+For this you will need to have memcached installed and working, and then simply add add the following to your `config/environment.rb` file:
+
+    config.action_controller.session_store = :mem_cache_store
+
 ## Initiate Facebooker Plus in Your App
 
 Simply place the following line of code in your ApplicationController, before Facebooker's `ensure_application_is_installed_by_facebook_user`:

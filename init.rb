@@ -8,6 +8,7 @@ if defined? Rails
     require 'facebooker_plus/extensions/active_record'
     require 'facebooker_plus/extensions/action_controller'
     require 'facebooker_plus/extensions/action_view'
+    require 'facebooker_plus/extensions/session'
     
     FacebookerPlus::Base.init(defined?(config) ? config : nil)
     
