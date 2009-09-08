@@ -50,14 +50,18 @@ module FacebookerPlus
 
       # make sure facebooker is configured properly
       def apply_facebooker_options(options = {})
+        @facebook_app = {:is_multi_app => false}
         if @facebooker_plus_options.has_key?(:app_class)
           app_model = @facebooker_plus_options[:app_class].constantize
           app = app_model.find_by_fb_app_id!(params[:fb_sig_app_id] || session[:app_id]) rescue nil
           if app
             Facebooker.apply_configuration(app.attributes)
+            @facebook_app[:is_multi_app] = true
           end
         end
-        @facebook_app = Facebooker.facebooker_config
+        Facebooker.facebooker_config.each do |key, value|
+          @facebook_app[key.to_sym] = value
+        end
       end
       
       # a one line comment is too short to explain what and why this code is about...

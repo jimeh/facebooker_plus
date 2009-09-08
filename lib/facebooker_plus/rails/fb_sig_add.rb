@@ -7,6 +7,7 @@ module FacebookerPlus
       end
 
       def fb_sig_add(url)
+        #TODO Figure out if fb_sig* params are needed in single-app mode.
         return url if params['fb_sig_in_iframe'].blank? || !url.index('.facebook.com').nil?
         if anchor_pos = url.index("#")
           anchor = url[anchor_pos..url.length-1]
