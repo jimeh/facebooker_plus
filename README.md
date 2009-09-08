@@ -6,17 +6,37 @@ Originally the main focus was on iframe-based applications, meaning that canvas 
 
 [1]: http://github.com/mmangino/facebooker/tree/master
 
-* Adds multi-application support by storing all application configuration in the database.
+* Adds optional support for running multiple applications by storing application configurations in the database.
 * Adds a lot of customizations to make sure iframe based Facebook applications work properly.
 	* Cookies are set properly in WebKit-based browsers which default to deny 3rd party cookies.
 	* All helpers are overloaded to include the `fb_sig_*` params in all links, forms, button_to and more.
 	* In the actual requested URLs `xfb_sig_*` is used instead to avoid issues with Facebook's invite forms which tend to strip the params from the URL, causing Facebooker to fail for iframe applications in browsers which don't accept third party cookies.
 
-## Install Plugin
+# Setup
+
+### Install Plugin
 
     script/plugin install git://github.com/jimeh/facebooker_plus.git
 
-## Setup the Database
+### Use Memcache for Session storage
+
+Due to third party cookies being blocked on some browsers, the default cookie storage for session data does not work when you're developing an iframe application. Instead you need to store the session data on the server. This can be done in a few different way, but the generally recommended method is to use memcached.
+
+For this you will need to have memcached installed and working, and then simply add add the following to your `config/environment.rb` file:
+
+    config.action_controller.session_store = :mem_cache_store
+
+### Initiate Facebooker Plus in Your App
+
+Simply place the following line of code in your ApplicationController, before Facebooker's `ensure_application_is_installed_by_facebook_user`:
+
+    init_facebooker_plus
+
+## Multi-App Mode
+
+With Multi-App mode your one Rails application can easily run multiple different Facebook applications from a single code base. This is achieved by storing your Facebook configurations in the database. Typically in a table called "apps".
+
+### Create Model and Migration
 
     script/generate model App
 
@@ -42,27 +62,13 @@ And then migrate:
 
     rake db:migrate
 
-Edit `app/models/app.rb`, and add `extend_application_with_facebooker_plus` like so:
- 
-    class App < ActiveRecord::Base
-      extend_application_with_facebooker_plus
-    end
+### Initialize Facebooker Plus
 
-## Use Memcache for Session storage
+We need to tell Facebooker Plus that it's running in Muti-App mode. Do this by passing `:app_class` with a string value of the App model to `init_facebooker_plus`.
 
-Due to third party cookies being blocked on some browsers, the default cookie storage for session data does not work when you're developing an iframe application. Instead you need to store the session data on the server. This can be done in a few different way, but the generally recommended method is to use memcached.
+    init_facebooker_plus(:app_class => "App")
 
-For this you will need to have memcached installed and working, and then simply add add the following to your `config/environment.rb` file:
-
-    config.action_controller.session_store = :mem_cache_store
-
-## Initiate Facebooker Plus in Your App
-
-Simply place the following line of code in your ApplicationController, before Facebooker's `ensure_application_is_installed_by_facebook_user`:
-
-    init_facebooker_plus
-
-## Configuring Facebooker
+### Configuring Facebooker
 
 Use your favorite database viewer/editor and add a new row to the `apps` table with all the correct information. If for any reason the current app's configuration is not stored in the database, the table doesn't exist, or any other problem, Facebooker will revert to using `config/facebooker.yml` for it's configuration.
 
