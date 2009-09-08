@@ -5,7 +5,6 @@ if defined? Rails
     require 'facebooker_plus/rails/fb_sig_add'
     require 'facebooker_plus/rails/controller'
     require 'facebooker_plus/rails/helper'
-    require 'facebooker_plus/extensions/active_record'
     require 'facebooker_plus/extensions/action_controller'
     require 'facebooker_plus/extensions/action_view'
     require 'facebooker_plus/extensions/session'
