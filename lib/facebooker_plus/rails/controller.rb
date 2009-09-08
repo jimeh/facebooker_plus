@@ -25,9 +25,7 @@ module FacebookerPlus
       # ---------------------------------------------------------------
       
       def set_facebooker_plus_options(options = {})
-        @facebooker_plus_options = {
-          :app_class => "App"
-        }
+        @facebooker_plus_options = {}
         options.each do |key, value|
           @facebooker_plus_options[key] = value
         end
@@ -54,11 +52,12 @@ module FacebookerPlus
       def apply_facebooker_options(options = {})
         if @facebooker_plus_options.has_key?(:app_class)
           app_model = @facebooker_plus_options[:app_class].constantize
-          @app = app_model.retrieve_app(params[:fb_sig_app_id] || session[:app_id])
-          if @app
-            Facebooker.apply_configuration(@app.attributes)
+          app = app_model.find_by_fb_app_id!(params[:fb_sig_app_id] || session[:app_id]) rescue nil
+          if app
+            Facebooker.apply_configuration(app.attributes)
           end
         end
+        @facebook_app = Facebooker.facebooker_config
       end
       
       # a one line comment is too short to explain what and why this code is about...
