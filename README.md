@@ -64,7 +64,7 @@ And then migrate:
 
 ### Initialize Facebooker Plus
 
-We need to tell Facebooker Plus that it's running in Muti-App mode. Do this by passing `:app_class` with a string value of the App model to `init_facebooker_plus`.
+We need to tell Facebooker Plus that it's running in Muti-App mode. Do this by initalizing Facebooker Plus like this:
 
     init_facebooker_plus(:app_class => "App")
 
