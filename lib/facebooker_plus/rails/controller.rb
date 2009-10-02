@@ -102,7 +102,7 @@ module FacebookerPlus
       def non_fb_params
         custom_params = []
         params.each do |key, value|
-          custom_params << key.to_s + "=" + value.to_s if !key.to_s.match(/^(fb\_sig|controller|action|id)/)
+          custom_params << key.to_s + "=" + value.to_s if !key.to_s.match(/^(fb\_sig.*|controller|action|id)$/)
         end
         custom_params = custom_params.join("&")
         custom_params = "?" + custom_params if !custom_params.blank?
