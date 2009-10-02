@@ -5,10 +5,10 @@ module FacebookerPlus
       def self.included(controller)
         controller.extend ClassMethods
         
-        view_path = File.join(File.dirname(__FILE__), 'app', 'views')
-        if controller.public_methods.include? 'append_view_path'  # rails 2.1+
-          controller.append_view_path view_path
-        elsif controller.public_methods.include? "view_paths"     # rails 2.0+
+        view_path = File.join(File.dirname(__FILE__), "app", "views")
+        if controller.public_methods.include?("append_view_path") # rails 2.1+
+          controller.append_view_path(view_path)
+        elsif controller.public_methods.include?("view_paths")    # rails 2.0+
           controller.view_paths << view_path
         else                                                      # rails <2.0
           controller.template_root = view_path
@@ -39,7 +39,7 @@ module FacebookerPlus
       end
       
       # ensure that xfb_sig* params are renamed to fb_sig*
-      def ensure_parameters_are_chopped(chopment = 'x', match = 'fb_sig')   
+      def ensure_parameters_are_chopped(chopment = "x", match = "fb_sig")
         params.each do |key, value|
           if key.index(chopment + match) == 0
             params[key.sub(chopment, "").to_sym] = value
