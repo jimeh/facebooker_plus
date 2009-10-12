@@ -14,7 +14,12 @@ module FacebookerPlus
           url = url[0..anchor_pos-1]
         end
         query_string = ''
-        fb_params.each { |value| query_string << "x" << value[0].to_s << '=' << value[1].to_s << '&' }
+        fb_params.each do |key, value|
+          value = value.to_f if value.is_a?(Time)
+          value = "1" if value == true
+          value = "0" if value == false
+          query_string << "x" << key.to_s << '=' << value.to_s << '&'
+        end
         query_string.chop!
         result  = url
         result << (!url.index('?').nil? ? '&' : '?')
