@@ -131,7 +131,7 @@ module FacebookerPlus
         
         def skip_facebooker_plus(options = {})
           skip_before_filter :create_session_cookie_if_needed, options
-          skip_before_filter :configure_facebooker, options
+          skip_before_filter :apply_facebooker_options, options
         end
         
       end
