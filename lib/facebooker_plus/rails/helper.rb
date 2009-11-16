@@ -13,10 +13,6 @@ module FacebookerPlus
         super(record_or_name_or_array, *args, &proc)
       end
 
-      def redirect_to(location)
-        url = fb_sig_add(location) if location.is_a?(String)
-      end
-
       def button_to(name, options = {}, html_options = {})
         options = fb_sig_add(options) if options.is_a?(String)
         if html_options[:method] == :get || html_options[:method] == 'get'
