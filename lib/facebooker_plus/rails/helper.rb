@@ -9,7 +9,7 @@ module FacebookerPlus
       #FIXME make sure this works when using a hash as action URL
       # It throws an error saying that << is undefined for fb_sig_add or sth to that effect
       def form_for(record_or_name_or_array, *args, &proc)
-        args[0][:url] = fb_sig_add(args[0][:url]) if !args[0][:url].nil?
+        args[0][:url] = fb_sig_add(args[0][:url]) if !args[0].nil? && !args[0][:url].nil?
         super(record_or_name_or_array, *args, &proc)
       end
 
